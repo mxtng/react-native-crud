@@ -16,7 +16,7 @@ const IndexScreen = ({navigation}) => {
     navigation.setOptions({
       title: 'Tasks',
       headerRight: () => (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Create')}>
           <AntDesign style={styles.icon} name="plus" />
         </TouchableOpacity>
       ),

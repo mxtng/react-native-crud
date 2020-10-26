@@ -1,14 +1,16 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import { useNavigation } from '@react-navigation/native';
 
 const TaskItem = ({title}) => {
+  const navigation = useNavigation();
   return (
     <TouchableOpacity>
       <View style={styles.container}>
         <Text style={styles.title}>{title}</Text>
         <View style={styles.iconsView}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Edit')}>
             <EvilIcons style={styles.icon} name="pencil" />
           </TouchableOpacity>
           <TouchableOpacity>
