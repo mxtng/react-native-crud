@@ -1,17 +1,12 @@
-import React, {useLayoutEffect} from 'react';
-import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
+import React, {useLayoutEffect, useContext} from 'react';
+import {View, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import TaskItem from '../components/TaskItem';
-
-const tasksList = [
-  {title: 'Task #1'},
-  {title: 'Task #2'},
-  {title: 'Task #3'},
-  {title: 'Task #4'},
-  {title: 'Task #5'},
-];
+import Context from '../context/TaskContext';
 
 const IndexScreen = ({navigation}) => {
+  const {state} = useContext(Context);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: 'Tasks',
@@ -26,7 +21,7 @@ const IndexScreen = ({navigation}) => {
   return (
     <View>
       <FlatList
-        data={tasksList}
+        data={state}
         keyExtractor={(key) => key.title}
         renderItem={({item}) => <TaskItem title={item.title} />}
       />

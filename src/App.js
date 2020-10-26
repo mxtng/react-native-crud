@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import IndexScreen from './screens/IndexScreen';
 import CreateScreen from './screens/CreateScreen';
 import EditScreen from './screens/EditScreen';
+import {TaskProvider} from './context/TaskContext';
 
 const Stack = createStackNavigator();
 
@@ -19,4 +20,10 @@ const App = () => {
   );
 };
 
-export default App;
+export default () => {
+  return (
+    <TaskProvider>
+      <App />
+    </TaskProvider>
+  );
+};
