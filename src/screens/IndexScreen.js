@@ -22,8 +22,8 @@ const IndexScreen = ({navigation}) => {
     <View>
       <FlatList
         data={state}
-        keyExtractor={(key) => key.title}
-        renderItem={({item}) => <TaskItem title={item.title} />}
+        keyExtractor={(key) => key.id.toString()}
+        renderItem={({item}) => <TaskItem id={item.id} title={item.title} />}
       />
     </View>
   );

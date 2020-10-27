@@ -1,15 +1,24 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useLayoutEffect, useState, useEffect, useContext} from 'react';
 import {View, Text, TextInput, StyleSheet, Button} from 'react-native';
+import TaskContext from '../context/TaskContext';
 
-const EditScreen = ({navigation}) => {
-  const [title, setTitle] = useState('Todo #1');
-  const [detail, setDetail] = useState('Complete todo by today');
+const EditScreen = ({route, navigation}) => {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const {state, editTask} = useContext(TaskContext);
+  const id = route.params.id;
 
   useLayoutEffect(() => {
     navigation.setOptions({
       title: 'Edit Task',
     });
-  });
+  }, [navigation]);
+
+  useEffect(() => {
+    const task = state.find((item) => item.id === id);
+    setTitle(task.title);
+    setDescription(task.description);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -23,10 +32,16 @@ const EditScreen = ({navigation}) => {
       <TextInput
         multiline
         style={styles.textInput}
-        value={detail}
-        onChangeText={(text) => setDetail(text)}
+        value={description}
+        onChangeText={(text) => setDescription(text)}
       />
-      <Button style={styles.button} title="Update Task" />
+      <Button
+        style={styles.button}
+        title="Update Task"
+        onPress={() =>
+          editTask(id, title, description, () => navigation.navigate('Index'))
+        }
+      />
     </View>
   );
 };
