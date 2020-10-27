@@ -1,9 +1,11 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useLayoutEffect, useState, useContext} from 'react';
 import {View, Text, TextInput, StyleSheet, Button} from 'react-native';
+import TaskContext from '../context/TaskContext';
 
 const CreateScreen = ({navigation}) => {
   const [title, setTitle] = useState('');
-  const [detail, setDetail] = useState('');
+  const [description, setDescription] = useState('');
+  const {createTask} = useContext(TaskContext);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -23,10 +25,16 @@ const CreateScreen = ({navigation}) => {
       <TextInput
         multiline
         style={styles.textInput}
-        value={detail}
-        onChangeText={(text) => setDetail(text)}
+        value={description}
+        onChangeText={(text) => setDescription(text)}
       />
-      <Button style={styles.button} title="Create Task" />
+      <Button
+        style={styles.button}
+        title="Create Task"
+        onPress={() =>
+          createTask(title, description, () => navigation.navigate('Index'))
+        }
+      />
     </View>
   );
 };

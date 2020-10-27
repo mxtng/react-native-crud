@@ -1,12 +1,19 @@
 import React, {useReducer} from 'react';
 
 const reducer = (state, action) => {
-  switch (action.type) {
+  const {type, payload} = action;
+  switch (type) {
     case 'create_task':
+      return [
+        ...state,
+        {
+          id: state.length + 1,
+          title: payload.title,
+          description: payload.description,
+        },
+      ];
     case 'edit_task':
-      return state.map((item) =>
-        item.id === action.payload.id ? action.payload : item,
-      );
+      return state.map((item) => (item.id === payload.id ? payload : item));
     case 'delete_task':
     default:
       return state;
@@ -24,13 +31,18 @@ const TaskContext = React.createContext();
 export const TaskProvider = ({children}) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const createTask = (title, description, callback) => {
+    dispatch({type: 'create_task', payload: {title, description}});
+    if (callback) return callback();
+  };
+
   const editTask = (id, title, description, callback) => {
     dispatch({type: 'edit_task', payload: {id, title, description}});
     if (callback) return callback();
   };
 
   return (
-    <TaskContext.Provider value={{state, editTask}}>
+    <TaskContext.Provider value={{state, createTask, editTask}}>
       {children}
     </TaskContext.Provider>
   );
