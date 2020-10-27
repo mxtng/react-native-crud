@@ -8,7 +8,7 @@ const TaskItem = ({id, title}) => {
   const navigation = useNavigation();
   const {deleteTask} = useContext(TaskContext);
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate('Detail', {id})}>
       <View style={styles.container}>
         <Text style={styles.title}>{title}</Text>
         <View style={styles.iconsView}>
