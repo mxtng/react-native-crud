@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import {useNavigation} from '@react-navigation/native';
+import TaskContext from '../context/TaskContext';
 
 const TaskItem = ({id, title}) => {
   const navigation = useNavigation();
+  const {deleteTask} = useContext(TaskContext);
   return (
     <TouchableOpacity>
       <View style={styles.container}>
@@ -13,7 +15,7 @@ const TaskItem = ({id, title}) => {
           <TouchableOpacity onPress={() => navigation.navigate('Edit', {id})}>
             <EvilIcons style={styles.icon} name="pencil" />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => deleteTask(id)}>
             <EvilIcons style={styles.icon} name="trash" />
           </TouchableOpacity>
         </View>

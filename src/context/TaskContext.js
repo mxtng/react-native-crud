@@ -15,6 +15,7 @@ const reducer = (state, action) => {
     case 'edit_task':
       return state.map((item) => (item.id === payload.id ? payload : item));
     case 'delete_task':
+      return state.filter((item) => item.id !== payload);
     default:
       return state;
   }
@@ -41,8 +42,12 @@ export const TaskProvider = ({children}) => {
     if (callback) return callback();
   };
 
+  const deleteTask = (id) => {
+    dispatch({type: 'delete_task', payload: id});
+  };
+
   return (
-    <TaskContext.Provider value={{state, createTask, editTask}}>
+    <TaskContext.Provider value={{state, createTask, editTask, deleteTask}}>
       {children}
     </TaskContext.Provider>
   );
